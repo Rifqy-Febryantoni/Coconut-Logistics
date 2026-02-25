@@ -1,0 +1,34 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main", "staging" ]
+  pull_request:
+    branches: [ "main", "staging" ]
+
+jobs:
+  validate-docker:
+    name: Validate Docker Compose
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Create Dummy .env File
+        run: cp .env.example .env
+
+      - name: Validate Compose File
+        run: docker compose config
+
+  # TODO: Isi test job untuk backend dan frontend
+  # Example:
+  # test-backend:
+  #   name: Test Backend
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: '1.21'
+  #     - name: Run Tests
+  #       working-directory: ./backend
+  #       run: go test -v ./...

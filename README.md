@@ -42,7 +42,22 @@ Platform Peta Digital 3D (berbasis Cesium) untuk memvisualisasikan rantai pasok 
 *   **Manajemen Rahasia (Secrets):** Password database, API Key **haram** dimasukkan ke Git. Data asli hanya disimpan di dalam file `.env`.
 *   **Aturan Branching Git:**
     *   `main`: Lingkungan *Production* (Suci, tidak boleh di-*push* langsung).
-    *   `staging`: Lingkungan *Testing/QA*.
-    *   `feature/...`: Cabang tempat *developer* bekerja.
-*   **Pull Request (PR):**
-    Dilarang *push* langsung ke `main` atau `staging`. Setiap *developer* wajib membuat *branch* baru dengan format `feature/nama-fitur` lalu membuat Pull Request ke `staging` dan melewati pengecekan (*Code Review*) sebelum kodenya digabungkan. Pipeline CI/CD akan berjalan otomatis saat PR dibuat.
+    *   `staging`: Lingkungan *Testing/QA*. Tempat berkumpulnya semua fitur baru sebelum rilis.
+    *   `feature/...` atau `fix/...`: Cabang tempat *developer* bekerja.
+*   **Workflow Developer (Cara Berkontribusi):**
+    1. Pastikan Anda berada di branch `staging` terbaru:
+       ```bash
+       git checkout staging
+       git pull origin staging
+       ```
+    2. Buat branch baru dari `staging` sesuai fitur yang dikerjakan:
+       ```bash
+       git checkout -b feature/nama-fitur-anda
+       ```
+    3. Lakukan *commit* dan *push* hasil kerja Anda ke remote branch:
+       ```bash
+       git push origin feature/nama-fitur-anda
+       ```
+    4. Buka GitHub, buat **Pull Request (PR)** dari branch Anda menuju `staging`.
+    5. Tunggu proses *Code Review* dan pastikan semua tes CI/CD (GitHub Actions) lolos (*Passed*).
+    6. Jika sudah disetujui, gabungkan (Merge) PR tersebut ke `staging`.
